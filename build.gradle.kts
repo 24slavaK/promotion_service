@@ -1,17 +1,12 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.2.11"
-	id("io.spring.dependency-management") version "1.1.6"
+	id("org.springframework.boot") version "3.0.6"
+	id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "faang.school"
-version = "0.0.1-SNAPSHOT"
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
+version = "1.0"
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
@@ -63,6 +58,16 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+tasks.test {
+	useJUnitPlatform()
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+val test by tasks.getting(Test::class) { testLogging.showStandardStreams = true }
+
+tasks.bootJar {
+	archiveFileName.set("service.jar")
 }
